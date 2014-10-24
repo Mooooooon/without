@@ -34,15 +34,32 @@ class without
     }
 
     /*
-     *
+     *标签
      */
-    function h($size, $content = '')
+    function h1($content = '', $attr = null)
     {
-        echo '<h' . $size . '>';
+        echo '<h1';
+        if ($attr != null) {
+            $this->attr($attr);
+        }
+        echo '>';
         echo $content;
-        $this->end[] = '</h' . $size . '>';
+        $this->end[] = '</h1>';
     }
 
+//输出标签属性
+    function attr($attr)
+    {
+        foreach ($attr as $key => $value) {
+            if (is_int($key)) {
+                echo ' ' . $value;
+            } else {
+                echo ' ' . $key . '="' . $value . '"';
+            }
+        }
+    }
+
+//输出闭合标签
     function end()
     {
         echo array_pop($this->end);

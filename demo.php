@@ -19,13 +19,17 @@ $js = [
 
 $html->header('without', $css);
 
-$html->h("1", "h1");
+$html->h1("~~~h1~~~~", [
+    "id" => "h1",
+    "class" => "h",
+]);
+$html->end();
 /*
  * or
- * $html->h("1");
+ * $html->h1();
  * echo "h1";
+ * $html->end();
+ * function end will print </h1>
  */
-$html->end();
-//end() will print </h1>
 
 $html->footer($js);
