@@ -13,6 +13,8 @@ class without
      * title str 标题
      * css array 样式表
      */
+    public $end;
+
     function header($title, $css = '')
     {
         echo "<!DOCTYPE html>";
@@ -29,6 +31,21 @@ class without
         }
         echo '</head>';
         echo '<body>';
+    }
+
+    /*
+     *
+     */
+    function h($size, $content = '')
+    {
+        echo '<h' . $size . '>';
+        echo $content;
+        $this->end[] = '</h' . $size . '>';
+    }
+
+    function end()
+    {
+        echo array_pop($this->end);
     }
 
     /*

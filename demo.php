@@ -18,4 +18,14 @@ $js = [
 ];
 
 $html->header('without', $css);
+
+$html->h("1", "h1");
+/*
+ * or
+ * $html->h("1");
+ * echo "h1";
+ */
+$html->end();
+//end() will print </h1>
+
 $html->footer($js);
