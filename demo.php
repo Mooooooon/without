@@ -8,6 +8,7 @@
 include 'without.class.php';
 
 $html = new without();
+
 $css = [
     "http://cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap.min.css",
     "http://cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"
@@ -23,13 +24,7 @@ $html->h1("~~~h1~~~~", [
     "id" => "h1",
     "class" => "h",
 ]);
+
 $html->end();
-/*
- * or
- * $html->h1();
- * echo "h1";
- * $html->end();
- * function end will print </h1>
- */
 
 $html->footer($js);

@@ -15,39 +15,61 @@ class without
      */
     public $end;
 
-    function header($title, $css = '')
+    static public $compress = false;
+
+    //是否开启压缩
+    function pr($str)
     {
-        echo "<!DOCTYPE html>";
-        echo '<html lang="zh-cn">';
-        echo '<head>';
-        echo '<meta charset="utf-8">';
-        echo '<meta http-equiv="X-UA-Compatible" content="IE=edge">';
-        echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
-        echo '<title>' . $title . '</title>';
-        if ($css != '') {
-            foreach ($css as $val) {
-                echo '<link rel="stylesheet" href="' . $val . '">';
-            }
+        if (self::$compress == false) {
+            echo $str . "\n";
+        } else {
+            echo $str;
         }
-        echo '</head>';
-        echo '<body>';
+    }
+
+    function css($css)
+    {
+        foreach ($css as $val) {
+            $this->pr('<link rel="stylesheet" href="' . $val . '">');
+        }
+    }
+
+    function js($js)
+    {
+        foreach ($js as $val) {
+            $this->pr('<script src="' . $val . '"></script>');
+        }
+    }
+
+    function header($title, $css = array(), $js = array(), $meta = array())
+    {
+        $this->pr("<!DOCTYPE html>");
+        $this->pr('<html lang="zh-cn">');
+        $this->pr('<head>');
+
+        $this->pr('<meta charset="utf-8">');
+        $this->pr('<meta http-equiv="X-UA-Compatible" content="IE=edge">');
+        $this->pr('<meta name="viewport" content="width=device-width, initial-scale=1">');
+        $this->pr('<title>' . $title . '</title>');
+        $this->css($css);
+        $this->js($js);
+        $this->pr('</head>');
+        $this->pr('<body>');
     }
 
     /*
      *标签
      */
-    function h1($content = '', $attr = null)
+    function h1($content = '', $attr = array())
     {
         echo '<h1';
-        if ($attr != null) {
-            $this->attr($attr);
-        }
+        $this->attr($attr);
         echo '>';
         echo $content;
         $this->end[] = '</h1>';
     }
 
-//输出标签属性
+    //输出标签属性
     function attr($attr)
     {
         foreach ($attr as $key => $value) {
@@ -59,24 +81,22 @@ class without
         }
     }
 
-//输出闭合标签
-    function end()
+    //输出闭合标签
+    function end($sum = 1)
     {
-        echo array_pop($this->end);
+        for ($i = $sum; $i > 0; $i--) {
+            $this->pr(array_pop($this->end));
+        }
     }
 
     /*
      * html尾部代码生成函数
      * js array 样式表
      */
-    function footer($js = '')
+    function footer($js = array())
     {
-        if ($js != '') {
-            foreach ($js as $val) {
-                echo '<script src="' . $val . '"></script>';
-            }
-        }
-        echo '</body>';
-        echo '</html>';
+        $this->js($js);
+        $this->pr('</body>');
+        $this->pr('</html>');
     }
 }
